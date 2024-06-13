@@ -1,0 +1,77 @@
+.linkpage{
+    height: 100vh;
+    background-color:rgb(18, 18, 75);
+    width:20%;
+}
+.linkpage1{
+    height: 100vh;
+    margin-left: 20%;
+    margin-top: -100vh;
+
+}
+.container-admin {
+    width: 90%;
+    margin-left: 5%;
+ }
+.linkpage .admin-image{
+    width: 70%;
+    border-radius: 100%;
+    margin-left: 2%;
+    margin-top: 5vh; 
+
+ }
+
+.linkpage1 .admin-image{
+    width: 7%;
+    border-radius: 100%;
+    margin-left: 2%;  
+    text-align: right; 
+    
+}
+.name{
+    margin-left: -23%;
+    font-size: 20px;
+    margin-top: 6vh;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.links{
+    margin-left: 25%;
+    font-size: 20px;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.image-admin{
+    text-align: right;
+}
+.image-admin1{
+    margin-left: 3%;
+    margin-top: -4vh;
+    font-size: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.rectangle {
+    width: 150px;
+    height: 150px;
+    font-size: 30px;
+    background-color:rgb(18, 18, 75);
+    border-radius: 100%;
+    color: white;
+}
+thead{
+    font-weight: bold;
+    font-size: 23px;
+    
+   
+}
+.blogslist{
+    margin-left: 15%;
+    
+}
+.action{
+    width: 3%;
+}
+.p-title{
+    font-size: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
