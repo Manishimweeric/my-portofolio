@@ -156,7 +156,7 @@
             if (response.ok) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('role', data.role);
-            window.location.href = data.role === 'admin' ? 'Admin.html' : 'indexs.html'; 
+            window.location.href = data.role === 'admin' ? 'Admin.html' : 'index.html'; 
             } else {
             alert('Login failed: ' + data.message);
             }

@@ -1,7 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+    <script src="call.js"></script>
 
     <link rel="stylesheet" href="style/style.css">
     <title>Eric Portfolio</title>
@@ -356,7 +356,7 @@
     </footer>
     <br>
 
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {    
     fetch('https://blogs-backends-x8t0.onrender.com/api/blogs')
     .then(response => response.json())
@@ -376,17 +376,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-body">
                             <h5 class="card-title col-md-5">${post.title}</h5>
                             <p class="card-text col-md-11">${post.content.slice(0, 100)}...</p>
-                            <p class="col">
-                                <a href="login.html" class="like-link" data-post-id="${post._id}">
-                                    <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">
-                                </a>
-                                <span class="likenumber">${post.Likes || 0}</span>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="login.html" class="comment-link" data-post-id="${post._id}">
-                                    <img src="Images/comment-removebg-preview.png" class="images comment-image" alt="Comment">
-                                </a>
-                                <span class="likenumber">${post.comments || 0}</span>
-                            </p>
+                                <p class="col">
+                                    <a href="#" onclick="likePost('${post._id}')">
+                                        <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">
+                                    </a>
+                                    <span id="like-count-${post._id}" class="likenumber">${post.Likes || 0}</span>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="" class="comment-link" data-post-id="${post._id}">
+                                        <img src="Images/comment-removebg-preview.png" class="images comment-image" alt="Comment">
+                                    </a>
+                                    <span class="likenumber">${post.comments || 0}</span>
+                                </p>
                             &nbsp;&nbsp;
                             <a href="blogsdetail.html?id=${post._id}" class="btn btn-primary">Read More <i class="bi bi-arrow-right"></i></a>
                         </div>
@@ -394,12 +395,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             blogsContainer.insertAdjacentHTML('beforeend', blogHTML);
-        });
-
-        
+        });        
     })
     .catch(error => console.error('Error fetching data:', error));
 });
+function likePost(postId) {
+
+    // fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `${token}`
+    //     },
+    // })
+
+    const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
+
+    Verifytoken(url, {
+        method: 'POST',
+    })
+    .then(async (response) => {
+        if (response.ok) {
+            const result = await response.json();
+            const likeCountElement = document.getElementById(`like-count-${postId}`);
+            const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
+            if (result.message === 'Like added') {
+                likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+                likeButton.classList.add('liked');
+            } else if (result.message === 'Like removed') {
+                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
+                likeButton.classList.remove('liked');
+            }
+        } else {
+            const errorText = await response.text();
+            console.error('Failed to like blog:', errorText);
+        }
+    })
+    .catch(error => {
+        console.error('Error liking post:', error);
+        alert('An error occurred while liking the post.');
+    });
+}
+
+
+
 
 </script>
 </body>

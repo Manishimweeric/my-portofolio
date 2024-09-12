@@ -1,4 +1,4 @@
-async function Verifytocken(url, options = {}) {
+async function Verifytoken(url, options = {}) {
     const token = localStorage.getItem('token');
 
     if (!token) {        
