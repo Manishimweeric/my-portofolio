@@ -1,7 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -400,20 +399,24 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => console.error('Error fetching data:', error));
 });
 function likePost(postId) {
-    const token = localStorage.getItem('token'); 
+    
+    // fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `${token}`
+    //     },
+    // })
 
-    if (!token) {
-        console.error('Token is missing');
-        return;
-    }
+    const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
 
-    fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`, {
+    Verifytocken(url, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${token}`
-        },
+          
+        }
     })
+
     .then(async (response) => {
         if (response.ok) {
             const result = await response.json();
