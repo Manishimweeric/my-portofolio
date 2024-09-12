@@ -356,7 +356,7 @@
     </footer>
     <br>
 
-    <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {    
     fetch('https://blogs-backends-x8t0.onrender.com/api/blogs')
     .then(response => response.json())
@@ -399,35 +399,71 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(error => console.error('Error fetching data:', error));
 });
-    async function likePost(postId) {
-        const token = localStorage.getItem('token'); // Get the token from localStorage
+    // async function likePost(postId) {
+    //     const token = localStorage.getItem('token'); // Get the token from localStorage
 
-        try {
-            const response = await fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `${token}`
-                },
-                credentials: 'include' 
-            });
+    //     try {
+    //         const response = await fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `${token}`
+    //             },
+    //             credentials: 'include' 
+    //         });
 
-            const result = await response.json();
+    //         const result = await response.json();
 
-            if (response.ok) {
-                // Get the like count span by its id and update the like count
-                const likeCountSpan = document.getElementById(`like-count-${postId}`);
-                const currentCount = parseInt(likeCountSpan.textContent, 10);
-                const newLikeCount = result.message === 'Like added' ? currentCount + 1 : currentCount - 1;
-                likeCountSpan.textContent = newLikeCount;
-                console.log('Like count updated');
-            } else {
-                console.error(result.message);
-            }
-        } catch (error) {
-            console.error('Error liking post:', error);
-        }
+    //         if (response.ok) {
+    //             // Get the like count span by its id and update the like count
+    //             const likeCountSpan = document.getElementById(`like-count-${postId}`);
+    //             const currentCount = parseInt(likeCountSpan.textContent, 10);
+    //             const newLikeCount = result.message === 'Like added' ? currentCount + 1 : currentCount - 1;
+    //             likeCountSpan.textContent = newLikeCount;
+    //             console.log('Like count updated');
+    //         } else {
+    //             console.error(result.message);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error liking post:', error);
+    //     }
+    // }
+
+function likePost(postId) {
+    const token = localStorage.getItem('token'); // Get the token from localStorage
+
+    if (!token) {
+        console.error('Token is missing');
+        return;
     }
+
+    fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` // Include Bearer token prefix
+        },
+        credentials: 'include'
+    })
+    .then(response => response.json()) // Convert response to JSON
+    .then(result => {
+        if (result.message === 'Like added' || result.message === 'Like removed') {
+            // Get the like count span by its id and update the like count
+            const likeCountSpan = document.getElementById(`like-count-${postId}`);
+            const currentCount = parseInt(likeCountSpan.textContent, 10);
+            const newLikeCount = result.message === 'Like added' ? currentCount + 1 : currentCount - 1;
+            likeCountSpan.textContent = newLikeCount;
+            console.log('Like count updated');
+        } else {
+            throw new Error(result.message); // If there's an error in response
+        }
+    })
+    .catch(error => {
+        console.error('Error liking post:', error);
+        alert('An error occurred while liking the post.');
+    });
+}
+
 
 
 </script>
