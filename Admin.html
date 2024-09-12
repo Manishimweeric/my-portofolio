@@ -69,42 +69,65 @@
     </div>
 
        <br><br><br>
-
-       <table class="table ml-5 col-md-11">
-        <thead class="thead">
-                <td class="td">N#</td>
-                <td class="td">Book Title</td>
-                <td class="td">Publisher</td>
-                <td class="td">Date</td>
+       <table id="blogsTable" class="table text-center col-md-11 ml-5" >
+        <thead class="thead" style="font-size: small;">
+            <tr>
+                <th class="td">N#</th>
+                <th class="td">Title</th>
+                <th class="td">Content</th>
+                <th class="td">Author</th>
+                <th class="td col-md-1">Blogs Image</th>
+            </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td class="td">2</td>
-                <td class="td">To Kill a Mockingbird</td>
-                <td class="td">J.B. Lippincott & Co.</td>
-                <td class="td">1960</td>
-            </tr>
-            <tr>
-                <td class="td">3</td>
-                <td class="td">J.B. Lippincott & Co.</td>
-                <td class="td">Secker & Warburg</td>
-                <td class="td">1949</td>
-            </tr>
-            <tr>
-                <td class="td">3</td>
-                <td class="td">Pride and Prejudice</td>
-                <td class="td">T. Egerton</td>
-                <td class="td">1813</td>
-            </tr>
-            <tr>
-                <td class="td">4</td>
-                <td class="td">The Great Gatsby</td>
-                <td class="td">Charles Scribner's Sons</td>
-                <td class="td">1925</td>
-            </tr>
+        <tbody id="blogsTableBody">
         </tbody>
     </table>
     </div>
-    </section>    
+    </section>   
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');            
+            if (!token) {
+                console.error('Token is missing');
+                return;
+            }
+ 
+            fetch('https://blogs-backends-x8t0.onrender.com/api/blogs', {
+                method: 'GET', 
+                headers: {
+                    'Authorization': `${token}`
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const tableBody = document.getElementById('blogsTableBody');
+                tableBody.innerHTML = ''; 
+ 
+                data.slice(0, 2).forEach((post, index) => {
+                    const row = document.createElement('tr');
+ 
+                    row.innerHTML = `
+                        <td class="td">${index + 1}</td>
+                        <td class="td">${post.title}</td>
+                        <td class="td">${post.content}</td>
+                        <td class="td">${post.author}</td>
+                        <td class="td"><img src="${post.image}" alt="${post.title}" style="width: 100px; height: auto; border-radius:10px"></td>
+                    `;
+ 
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching blog posts:', error);
+            });
+        });
+
+      </script>
 </body>
 </html>

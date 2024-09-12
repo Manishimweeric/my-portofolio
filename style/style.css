@@ -286,3 +286,14 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
     background-color: lightgray; 
     transition: background-color 0.3s ease;
 }
+
+.form-control {
+    padding-left: 40px;
+}
+.form-control-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}

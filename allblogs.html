@@ -12,108 +12,144 @@
     <link rel="stylesheet" href="style/adminstyle.css">
 </head>
 <body>
-    <section class="container-admin " >
+    <section class="container-admin">
         <div class="linkpage">
-            <div class="row justify-content-center  ">
+            <div class="row justify-content-center">
                 <div class="col mt-2" style="text-align: right;">
                     <div class="card-body">
-                        <img src="Images/hhhhhh.jpg" alt="Eric's Portfolio Image ml-4 mt-5" class="admin-image">
+                        <img src="Images/hhhhhh.jpg" alt="Eric's Portfolio Image" class="admin-image">
                     </div>
                 </div>
-
-                <div class="col mt-5 " >
-                       <p class="name" >Eric Kabosi</p>
+                <div class="col mt-5">
+                    <p class="name">Eric Kabosi</p>
                 </div>
             </div>
 
-            <div class="row justify-content-center links ">
-                <div class="col mt-5  " >
-                    <i class="bi bi-house"></i>  <a href="Admin.html" class="link"></i> Blogs</a>
+            <div class="row justify-content-center links">
+                <div class="col mt-5">
+                    <i class="bi bi-house"></i> <a href="Admin.html" class="link"> Blogs</a>
                 </div>
             </div>
-            <div class="row justify-content-center links ">
-                <div class="col mt-4  " >
-                    <i class="bi bi-plus"></i><a href="newblogs.html" class="link">   New Blogs</a>
+            <div class="row justify-content-center links">
+                <div class="col mt-4">
+                    <i class="bi bi-plus"></i><a href="newblogs.html" class="link"> New Blogs</a>
                 </div>
             </div>
-            <div class="row justify-content-center links ">
-                <div class="col mt-4  " >
+            <div class="row justify-content-center links">
+                <div class="col mt-4">
                     <i class="bi bi-list"></i><a href="allblogs.html" class="link"> All Blogs</a>
                 </div>
             </div>
-
-
         </div>
         
-    <div class="linkpage1">
-        <div class="col image-admin mt-3">
-             <img src="Images/hhhhhh.jpg" alt="Eric's Portfolio Image ml-4 mt-5" class="admin-image">
+        <div class="linkpage1">
+            <div class="col image-admin mt-3">
+                <img src="Images/hhhhhh.jpg" alt="Eric's Portfolio Image" class="admin-image">
+            </div>
+            <div class="col image-admin1">
+                <p>ADMIN DASHBOARD</p>
+            </div>
+            <hr style="margin-left: 3%;">
+            <br><br><br>
+
+            <table id="blogsTable" class="table text-center col-md-11 ml-5" >
+                <thead class="thead" style="font-size: small;">
+                    <tr>
+                        <th class="td">N#</th>
+                        <th class="td">Title</th>
+                        <th class="td col-md-3">Content</th>
+                        <th class="td">Author</th>
+                        <th class="td">Image</th>
+                        <th class="td col-md-1" >Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="blogsTableBody">
+                </tbody>
+            </table>
+            
         </div>
-        <div class="col image-admin1 ">
-            <p class="" >ADMIN DASHBOARD</p>
-       </div>
-       <hr style="margin-left: 3%;">
-       <br><br><br>
-       
+    </section>
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+           const token = localStorage.getItem('token');            
+           if (!token) {
+               console.error('Token is missing');
+               return;
+           }
 
-       <br><br><br>
+           fetch('https://blogs-backends-x8t0.onrender.com/api/blogs', {
+               method: 'GET', 
+               
+           })
+           .then(response => {
+               if (!response.ok) {
+                   throw new Error('Network response was not ok ' + response.statusText);
+               }
+               return response.json();
+           })
+           .then(data => {
+               const tableBody = document.getElementById('blogsTableBody');
+               tableBody.innerHTML = ''; 
 
-       <table class="table text-center  col-md-10 ml-5">
-        <thead class="thead">
-            <td class="td">N#</td>
-                <td class="td">Book Title</td>
-                <td class="td">Publisher</td>
-                <td class="td">Date</td>
-                <td class="td">Actions</td>
-        </thead>
-        <tbody class="col-md-4">
-            <tr>
-                <td class="td">1</td>
-                <td class="td">To Kill a Mockingbird</td>
-                <td class="td">J.B. Lippincott & Co.</td>
-                <td class="td">1960</td>
-                <td class="col-md-5">
-                   <a href="" ><img src="Images/editimagr-removebg-preview.png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                   <a href=""><img src="Images/delete_icon-removebg-preview (1).png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a> 
-                </td>
-            </tr>
-            <tr>
-                <td class="td">2</td>
-                <td class="td">To Kill a Mockingbird</td>
-                <td class="td">Secker & Warburg</td>
-                <td class="td">1949</td>
-                <td class="col-md-5">
-                    <a href="" ><img src="Images/editimagr-removebg-preview.png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                   <a href=""><img src="Images/delete_icon-removebg-preview (1).png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a> 
-                </td>
-            </tr>
-            <tr>
-                <td class="td">3</td>
-                <td class="td">Pride and Prejudice</td>
-                <td class="td">T. Egerton</td>
-                <td class="td">1813</td>
-                <td class="col-md-5">
-                    <a href="" ><img src="Images/editimagr-removebg-preview.png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                   <a href=""><img src="Images/delete_icon-removebg-preview (1).png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a> 
-                </td>
-            </tr>
-            <tr>
-                <td class="td">4</td>
-                <td class="td">The Great Gatsby</td>
-                <td class="td">Charles Scribner's Sons</td>
-                <td class="td">1925</td>
-                <td class="col-md-5">
-                    <a href="" ><img src="Images/editimagr-removebg-preview.png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                   <a href=""><img src="Images/delete_icon-removebg-preview (1).png" alt="Eric's Portfolio Image ml-4 mt-5" class="action"></a> 
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
-    </section>    
+               data.forEach((post, index) => {
+                   const row = document.createElement('tr');
+
+                   row.innerHTML = `
+                       <td class="td">${index + 1}</td>
+                       <td class="td">${post.title}</td>
+                       <td class="td">${post.content}</td>
+                       <td class="td">${post.author}</td>
+                       <td><a href="${post.image}" target="_blank"><span style="font-size:16px; fon">Blog Image<span></a></td>
+                       <td class="">
+                                <a href="edit.html?id=${post._id}">
+                                    <img src="Images/editimagr-removebg-preview.png" alt="Edit" class="action" style="width: 16px; height: 16px;">
+                                </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" onclick="deletePost('${post._id}')">
+                                    <img src="Images/delete_icon-removebg-preview (1).png" alt="Delete" class="action" style="width: 16px; height: 16px;">
+                                </a>
+                        </td>
+                   `;
+
+                   tableBody.appendChild(row);
+               });
+           })
+           .catch(error => {
+               console.error('Error fetching blog posts:', error);
+           });
+       });
+
+function deletePost(postId) {
+     const token = localStorage.getItem('token');
+
+    if (!token) {
+        console.error('Token is missing');
+        return;
+    }
+
+    if (confirm('Are you sure you want to delete this blog post?')) {
+        fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Blog post deleted successfully.');
+                location.reload(); 
+            } else {
+                throw new Error('Failed to delete the blog post');
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting the blog post:', error);
+            alert('An error occurred while deleting the post.');
+        });
+    }
+}
+
+     </script>        
 </body>
 </html>
