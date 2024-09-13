@@ -487,13 +487,14 @@ function likePost(postId) {
 }
 
 
-// Function to fetch and display comments
+
 function fetchComments(postId) {
 
     const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`;
 
-        Verifytoken(url, {
+        fetch(url, {
             method: 'GET',
+            
         })
         .then(response => response.json())
         .then(comments => {
@@ -532,7 +533,8 @@ document.getElementById('addCommentForm').addEventListener('submit', (e) => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-        alert('Token is missing');
+        alert('Your token has expired. Would you like to log in again?');
+        document.getElementById('commentContent').value = '';
         return;
     }
 
@@ -558,8 +560,6 @@ document.getElementById('addCommentForm').addEventListener('submit', (e) => {
     })
     .catch(error => console.error('Error submitting comment:', error));
 });
-
-
 
 </script>
 </body>
