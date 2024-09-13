@@ -10,6 +10,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <script src="call.js"></script>
+    <script src="logout.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+     <!-- Bootstrap JS (with Popper for modals) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 
     <link rel="stylesheet" href="style/style.css">
     <title>Eric Portfolio</title>
@@ -41,7 +49,7 @@
                     <a class="nav-link" href="#contacts">CONTACTS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.html">LOGIN</a>
+                    <a class="nav-link" id="auth-link" href="login.html">LOGIN</a>
                 </li>
             </ul>
         </div>
@@ -355,6 +363,50 @@
         </section>
     </footer>
     <br>
+    <!-- Comment Modal -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="commentModalLabel">Comments</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Comments will be displayed here -->
+          <div id="commentsContainer"></div>
+  
+          <!-- Add Comment Form -->
+          <form id="addCommentForm">
+            <div class="mb-3">
+              <label for="commentContent" class="form-label">Add a comment</label>
+              <textarea class="form-control" id="commentContent" rows="2" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+    <script>
+        const token = localStorage.getItem('token');
+        
+        const authLink = document.getElementById('auth-link');        
+        if (token) {
+
+            authLink.textContent = 'LOGOUT';
+            authLink.href = '#'; 
+            authLink.onclick = function() {
+                logout();
+            };
+        } else {
+            authLink.textContent = 'LOGIN';
+            authLink.href = 'login.html';
+        }
+    </script>
+    
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {    
@@ -376,18 +428,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="card-body">
                             <h5 class="card-title col-md-5">${post.title}</h5>
                             <p class="card-text col-md-11">${post.content.slice(0, 100)}...</p>
-                                <p class="col">
-                                    <a href="#" onclick="likePost('${post._id}')">
-                                        <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">
-                                    </a>
-                                    <span id="like-count-${post._id}" class="likenumber">${post.Likes || 0}</span>
+                            <p class="col">
+                                <a href="#" onclick="likePost('${post._id}')">
+                                    <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">
+                                </a>
+                                <span id="like-count-${post._id}" class="likenumber">${post.likesCount || 0}</span>
 
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="" class="comment-link" data-post-id="${post._id}">
-                                        <img src="Images/comment-removebg-preview.png" class="images comment-image" alt="Comment">
-                                    </a>
-                                    <span class="likenumber">${post.comments || 0}</span>
-                                </p>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="comment-link" data-post-id="${post._id}" data-bs-toggle="modal" data-bs-target="#commentModal">
+                                    <img src="Images/comment-removebg-preview.png" class="images comment-image" alt="Comment">
+                                </a>
+                                <span class="likenumber"></span>
+                            </p>
                             &nbsp;&nbsp;
                             <a href="blogsdetail.html?id=${post._id}" class="btn btn-primary">Read More <i class="bi bi-arrow-right"></i></a>
                         </div>
@@ -395,20 +447,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             blogsContainer.insertAdjacentHTML('beforeend', blogHTML);
-        });        
+        });
+
+        // Handle comment link click
+        document.querySelectorAll('.comment-link').forEach(commentLink => {
+            commentLink.addEventListener('click', (e) => {
+                const postId = e.target.closest('.comment-link').dataset.postId;
+                fetchComments(postId);
+            });
+        });
     })
     .catch(error => console.error('Error fetching data:', error));
 });
+
 function likePost(postId) {
-
-    // fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `${token}`
-    //     },
-    // })
-
     const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
 
     Verifytoken(url, {
@@ -431,12 +483,81 @@ function likePost(postId) {
             console.error('Failed to like blog:', errorText);
         }
     })
-    .catch(error => {
-        console.error('Error liking post:', error);
-        alert('An error occurred while liking the post.');
-    });
+
 }
 
+
+// Function to fetch and display comments
+function fetchComments(postId) {
+
+    const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`;
+
+        Verifytoken(url, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(comments => {
+            const commentsContainer = document.getElementById('commentsContainer');
+            commentsContainer.innerHTML = '';
+
+            comments.forEach(comment => {
+                const commentHTML = `
+                   <div class="comment py-2">
+                    <div class="d-flex align-items-start">
+                        <!-- User Avatar or Icon (optional) -->
+                        <img src="Images/usereico.png" alt="User Avatar" class="rounded-circle me-3" style="width: 40px; height: 40px;">
+
+                        <!-- Comment Body -->
+                        <div class="comment-body">
+                            <h6 class="fw-bold mb-1">${comment.user_id.email}</h6>
+                            <p class="mb-0 text-muted">${comment.content}</p>
+                            <small class="text-muted">${new Date(comment.date).toLocaleString()}</small> <!-- Example for a timestamp -->
+                        </div>
+                    </div>
+                </div>
+
+                `;
+                commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
+            });
+
+            document.getElementById('addCommentForm').dataset.postId = postId;
+        })
+        .catch(error => console.error('Error fetching comments:', error));
+}
+
+document.getElementById('addCommentForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const postId = e.target.dataset.postId;
+    const commentContent = document.getElementById('commentContent').value;
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        alert('Token is missing');
+        return;
+    }
+
+    fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` 
+        },
+        body: JSON.stringify({ content: commentContent })
+    })
+    .then(response => response.json())
+    .then(newComment => {
+
+        const commentsContainer = document.getElementById('commentsContainer');
+        const newCommentHTML = `
+            <div class="comment">
+                <p><strong>${token.email}</strong>: ${newComment.content}</p>
+            </div>
+        `;
+        commentsContainer.insertAdjacentHTML('beforeend', newCommentHTML);
+        document.getElementById('commentContent').value = '';
+    })
+    .catch(error => console.error('Error submitting comment:', error));
+});
 
 
 

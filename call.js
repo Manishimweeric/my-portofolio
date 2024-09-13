@@ -2,7 +2,13 @@ async function Verifytoken(url, options = {}) {
     const token = localStorage.getItem('token');
 
     if (!token) {        
-        window.location.href = '/login';
+        const userChoice = confirm('Your token has expired. Would you like to log in again?');            
+            if (userChoice) {
+                window.location.href = '/login.html'; 
+            } else {
+                window.location.href = '/index.html'; 
+            }
+            return;
         return;
     }
     try {
