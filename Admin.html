@@ -75,11 +75,10 @@
         </div>
     </div>
     
-    </div>
 
        <br><br><br>
        <table id="blogsTable" class="table text-center col-md-11 ml-5" >
-        <thead class="thead" style="font-size: small;">
+        <thead class="thead" style="font-size: small;font-family: 'Roboto', sans-serif;;">
             <tr>
                 <th class="td">N#</th>
                 <th class="td">Title</th>
@@ -88,7 +87,7 @@
                 <th class="td col-md-1">Blogs Image</th>
             </tr>
         </thead>
-        <tbody id="blogsTableBody">
+        <tbody id="blogsTableBody" style="font-family: 'Roboto', sans-serif;">
         </tbody>
     </table>
     </div>
@@ -135,37 +134,28 @@
             .catch(error => {
                 console.error('Error fetching blog posts:', error);
             });
-        });
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to fetch and display data
-    async function fetchCounts() {
-        try {
-            // Fetch data from the API
-            const response = await fetch('/posts/count');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+  
+
+        async function fetchCounts() {
+                try {
+                    const response = await fetch('https://blogs-backends-x8t0.onrender.com/api/blogs/counts');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    const likesElement = document.getElementById('likesCount');
+                    const commentsElement = document.getElementById('commentsCount');
+
+                    likesElement.innerHTML = `<p class="ml-4 py-5">${data.totalLikes}</p>`;
+                    commentsElement.innerHTML = `<p class="ml-4 py-5">${data.totalComments}</p>`;
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                }
             }
 
-            // Parse the JSON data
-            const data = await response.json();
-
-            // Get the HTML elements
-            const likesElement = document.getElementById('likesCount');
-            const commentsElement = document.getElementById('commentsCount');
-
-            // Update the HTML elements with the data
-            likesElement.innerHTML = `<p class="ml-4 py-5">${data.totalLikes}</p>`;
-            commentsElement.innerHTML = `<p class="ml-4 py-5">${data.totalComments}</p>`;
-        } catch (error) {
-            console.error('Fetch error:', error);
-        }
-    }
-
-    fetchCounts();
-});
-</script>
-
-
+            fetchCounts();
+        });
       </script>
 </body>
 </html>
