@@ -13,17 +13,17 @@
 </head>
 <style>
     #responseMessage.success {
-        color: #155724; /* Success text color */
-        background-color: #d4edda; /* Success background color */
-        border-color: #c3e6cb; /* Success border color */
+        color: #155724; 
+        background-color: #d4edda; 
+        border-color: #c3e6cb; 
         padding: 10px;
         border-radius: 5px;
     }
 
     #responseMessage.error {
-        color: #721c24; /* Error text color */
-        background-color: #f8d7da; /* Error background color */
-        border-color: #f5c6cb; /* Error border color */
+        color: #721c24;
+        background-color: #f8d7da; 
+        border-color: #f5c6cb; 
         padding: 10px;
         border-radius: 5px;
     }
@@ -33,13 +33,9 @@
         font-weight: 700;
     }
 
-    .form-control-icon {
-        padding-left: 3rem;
-    }
-
     .form-icon {
         position: absolute;
-        padding: 0.75rem;
+        padding: rem;
         font-size: 1.25rem;
         color: #6c757d;
         pointer-events: none;
@@ -49,23 +45,22 @@
         position: relative;
     }
 
-    .form-group input, .form-group textarea {
+    .form-control {
         padding-left: 3rem;
     }
 
-    .form-image {
-        width: 1.5rem;
-        height: 1.5rem;
-        margin-right: 0.5rem;
-    }
-
-    .input-group-prepend img {
-        width: 2rem;
-    }
-
-    .form-label {
+    .input-group-prepend {
         display: flex;
         align-items: center;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        padding: 0 0.75rem;
+        pointer-events: none;
+    }
+    .form-label{
+        font-family: 'Roboto', sans-serif;
     }
 </style>
 <body>
@@ -125,25 +120,25 @@
                         <form id="blogForm" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label class="form-label" for="title">
-                                    <img src="Images/title-icon.png" alt="Title Icon" class="form-image"> Title
+                                     Title
                                 </label>
-                                <input type="text" class="form-control form-control-icon" name="title" id="title" placeholder="Enter the title" required>
+                                <input type="text" class="form-control" name="title" id="title" placeholder="Enter the title" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="author">
-                                    <img src="Images/author-icon.png" alt="Author Icon" class="form-image"> Author
+                                     Author
                                 </label>
-                                <input type="text" class="form-control form-control-icon" name="author" id="author" placeholder="Enter the author's name" required>
+                                <input type="text" class="form-control" name="author" id="author" placeholder="Enter the author's name" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="content">
-                                    <img src="Images/content-icon.png" alt="Content Icon" class="form-image"> Content
+                                    Content
                                 </label>
-                                <textarea class="form-control form-control-icon" name="content" id="content" rows="4" placeholder="Enter the content" required></textarea>
+                                <textarea class="form-control" name="content" id="content" rows="4" placeholder="Enter the content" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="image">
-                                    <img src="Images/image-icon.png" alt="Image Icon" class="form-image"> Image
+                                    Image
                                 </label>
                                 <input type="file" class="form-control-file" name="image" id="image" required>
                             </div>

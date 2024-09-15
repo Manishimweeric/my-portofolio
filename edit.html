@@ -28,6 +28,32 @@
     padding: 10px;
     border-radius: 5px;
   }
+  .p-title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        font-weight: 100;
+    }
+    .form-group {
+        position: relative;
+    }
+
+    .form-control {
+        padding-left: 3rem;
+    }
+
+    .input-group-prepend {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        padding: 0 0.75rem;
+        pointer-events: none;
+    }
+    .form-label{
+        font-family: 'Roboto', sans-serif;
+
+    }
 </style>
 <body>
     <section class="container-admin " >
@@ -59,7 +85,7 @@
                     <i class="bi bi-list"></i><a href="allblogs.html" class="link"> All Blogs</a>
                 </div>
             </div>
-            
+
 
         </div>
         
@@ -73,17 +99,32 @@
        <hr style="margin-left: 3%;">
        <br><br><br>
        <br><br><br>
-      <div class="col-md-5 container text-center">
-        <p class="p-title mt-2" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">WELCOME TO BLOG UPDATE FORM </p>
+      <div class="col-md-7 container  ">
+        <p class="p-title mt-2 text-center" style="font-size: 25px; " >WELCOME TO BLOG UPDATE FORM </p>
 
-        <p id="responseMessage" class="mt-3 "></p>
-        <form id="blogForm" enctype="multipart/form-data">
-            <input type="text" class="form-control mt-5" name="title" id="title" placeholder="Title" required>
-            <input type="text" class="form-control mt-4" name="author" id="author" placeholder="Author" required>
-            <input type="text" class="form-control mt-4" name="content" id="content" placeholder="Content" required>
-            <input type="hidden" id="postId" value="">        
-            <button type="submit" class="btn btn-success mt-5 col-md-5" type="submit">Update</button>
-        </form>
+                        <p id="responseMessage" class="mt-3 "></p>
+                            <form id="blogForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="form-label" for="title">
+                                     Title
+                                </label>
+                                <input type="text" class="form-control" name="title" id="title" placeholder="Enter the title" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="author">
+                                     Author
+                                </label>
+                                <input type="text" class="form-control" name="author" id="author" placeholder="Enter the author's name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="content">
+                                    Content
+                                </label>
+                                <textarea class="form-control" name="content" id="content" rows="4" placeholder="Enter the content" required></textarea>
+                            </div>
+                        <input type="hidden" id="postId" value="">        
+                        <button type="submit" class="btn btn-success mt-5 col-xl text-center" type="submit">Update</button>
+                    </form>
         
        
     </div>

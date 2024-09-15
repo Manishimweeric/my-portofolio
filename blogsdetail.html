@@ -30,50 +30,52 @@
     </section>
     <br><br><br><br>
     <section class="container col-md-10 mt-5" id="blogs-more">
-        <div style="width: 100%;" class="text-center">
-            <div class="section-type text-center">MORE <span style="color: blue;">DETAIL</span></div>
+        <div class="text-center mb-4">
+            <h5 class="section-type">MORE <span class="text-primary">DETAIL</span></h5>
         </div>
-        <div id="loading" class="text-center my-5">
+    
+        <div id="loading" class="text-center my-5 d-none">
             <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
+    
         <div class="row justify-content-center py-5 mt-5" id="post-details" style="display: none;">
-            <div class="text-center col-md-3">
-                <div class="">
-                    <img id="post-image" src="" alt="Post Image" class="card-img-top portfolio-ima">
-                </div>
+
+            <div class="col-md-3 d-flex justify-content-center mb-4 mb-md-0">
+                <img id="post-image" src="" alt="Post Image" class="img-fluid rounded shadow">
             </div>
-            <div class="col-md-5">
-                <div class="card-body">
-                    <h5 id="post-title" class="card-title col-md-8"></h5>
-                    <p id="post-description" class="card-text col-md-11"></p>
-                    <p class="col-md-5">
-                        <table class="col-md-10">
-                            <br>
-                            <tr class="col-md-2">
-                                <td class="col-md-2">
-                                    <h4 class="h4">POSTED BY </h4>
-                                    <span id="post-author"></span>
-                                </td>
-                                <td class="col-md-2">
-                                    <h4 class="h4">TIME TO READ </h4>
-                                    <span id="post-date"></span>
-                                </td>
-                            </tr>
-                        </table>
-                    </p>
+
+            <div class="col-md-7">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 id="post-title" class="card-title mb-3"></h5>
+                        <p id="post-description" class="card-text mb-3"></p>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="text-muted">POSTED BY:</h6>
+                                <p id="post-author" class="fw-bold"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-muted">TIME TO READ:</h6>
+                                <p id="post-date" class="fw-bold"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col text-center">
-                <div class="card-body">
-                    <p id="post-content" class="card-text" style="font-size: 17px;"></p>
+            <div class="col-md-10">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <p id="post-content" class="card-text" style="font-size: 17px;"></p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+    
     <footer class="footer">
         <div class="row justify-content-center" style="margin-left: 8%;">
             <div class="col ml-5 ">
