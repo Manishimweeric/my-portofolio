@@ -410,7 +410,9 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {    
-    fetch('https://blogs-backends-x8t0.onrender.com/api/blogs')
+    fetch('https://blogs-backends-x8t0.onrender.com/api/blogs',{
+        method: 'GET',
+    })
     .then(response => response.json())
     .then(data => {
         const blogsContainer = document.getElementById('blogsContainer');
@@ -510,7 +512,7 @@ function fetchComments(postId) {
 
                         <!-- Comment Body -->
                         <div class="comment-body">
-                            <h6 class="fw-bold mb-1">${comment.user_id.email}</h6>
+                            <h6 class="fw-bold mb-1">${comment.user.email}</h6>
                             <p class="mb-0 text-muted">${comment.content}</p>
                             <small class="text-muted">${new Date(comment.date).toLocaleString()}</small> <!-- Example for a timestamp -->
                         </div>

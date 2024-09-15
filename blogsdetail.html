@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,88 +8,71 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
-
     <link rel="stylesheet" href="style/style.css">
     <title>Eric Portfolio</title>
 </head>
-
 <body>
-    <section id="index" >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand py-3" style="margin-left: 16%;" href="#">ERIC KABOSI</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse col-md-8" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html#blogs">BACK TO HOME</a>
-                </li>
-               
-            </ul>
-        </div>
-    </nav>
-</section>
-<br><br><br><br>     
+    <section id="index">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand py-3" style="margin-left: 16%;" href="#">ERIC KABOSI</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse col-md-8" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#blogs">BACK TO HOME</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+    <br><br><br><br>
     <section class="container col-md-10 mt-5" id="blogs-more">
-        <div style=" width:100%;" class="text-center">
-            <div class="section-type text-center">MORE <span style="color: blue;"> DETAIL</span></div>
+        <div style="width: 100%;" class="text-center">
+            <div class="section-type text-center">MORE <span style="color: blue;">DETAIL</span></div>
         </div>
-        <div class="row justify-content-center py-5 mt-5">
+        <div id="loading" class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="row justify-content-center py-5 mt-5" id="post-details" style="display: none;">
             <div class="text-center col-md-3">
                 <div class="">
-                    <img src="Images/3ee2d09be1740dc0a9b85853ff451f53-removebg-preview.png" alt="Eric's Portfolio Image"
-                        class="card-img-top portfolio-ima">
+                    <img id="post-image" src="" alt="Post Image" class="card-img-top portfolio-ima">
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="card-body">
-                    <h5 class="card-title col-md-8">How to Successfully Pitch an Article to a Magazine (and Get
-                        Published) </h5>
-                    <p class="card-text col-md-11">
-                        Are you a content writer who wants to start using AI text generators?
-                        We review the 5 best AI writing tools for content writing so you can find out what works best
-                        for you.
-                    </p>
+                    <h5 id="post-title" class="card-title col-md-8"></h5>
+                    <p id="post-description" class="card-text col-md-11"></p>
                     <p class="col-md-5">
-                    <table class="col-md-10">
-
-                        <br>
-                        <tr class="col-md-2">
-                            <td class="col-md-2">
-                                <h4 class="h4">POSTED BY </h4>
-                                Eric Manishimwe
-                            </td>
-                            <td class="col-md-2">
-                                <h4 class="h4">TIME TO READ </h4>
-                                4 Mins
-                            </td>
-                        </tr>
-                    </table>
+                        <table class="col-md-10">
+                            <br>
+                            <tr class="col-md-2">
+                                <td class="col-md-2">
+                                    <h4 class="h4">POSTED BY </h4>
+                                    <span id="post-author"></span>
+                                </td>
+                                <td class="col-md-2">
+                                    <h4 class="h4">TIME TO READ </h4>
+                                    <span id="post-date"></span>
+                                </td>
+                            </tr>
+                        </table>
                     </p>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center ">
+        <div class="row justify-content-center">
             <div class="col text-center">
                 <div class="card-body">
-                    <p class="card-text" style="font-size: 17px;">
-                        I am particularly drawn to [Company's Name] because of [specific reason related to the company's
-                        mission, values, projects, or reputation].
-                        I am impressed by [specific aspect of the company or its products/services], and I am eager to
-                        bring my [specific skills or experiences] to your team.
-                        I am confident and pantion that my proactive approach and strong work ethic will allow me to make a
-                        significant contribution to your organization.
-                        In my previous role at [Your Previous Company], I honed my skills in [specific skills or tasks
-                        relevant to the job].
-                        I successfully [mention a significant achievement or responsibility], which resulted in
-                        [quantifiable result,
-                        e.g., increased sales, improved efficiency, etc.]. My ability to [another relevant skill or
-                        task] further
-                        complements the qualifications you are seeking.
-                    </p>
+                    <p id="post-content" class="card-text" style="font-size: 17px;"></p>
                 </div>
+            </div>
+        </div>
     </section>
     <footer class="footer">
         <div class="row justify-content-center" style="margin-left: 8%;">
@@ -157,9 +139,35 @@
             &copy; 2023 ERIC MANISHIMWE &nbsp;&nbsp; LEGACY  POLICY
 
 <br>
-        </section>
-    </footer>
-    <br>
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
 
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+
+            if (postId) {
+                fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}`)
+                    .then(response => response.json())
+                    .then(post => {
+                        document.getElementById('loading').style.display = 'none';
+
+                        document.getElementById('post-title').textContent = post.title;
+                        document.getElementById('post-description').textContent = post.description;
+                        document.getElementById('post-author').textContent = post.author;
+                        document.getElementById('post-content').textContent = post.content;
+                        document.getElementById('post-image').src = post.image;
+                        document.getElementById('post-date').textContent= post.date;
+                        document.getElementById('post-details').style.display = 'flex';
+                    })
+                    .catch(error => {
+                        console.error('Error fetching post data:', error);
+                        document.getElementById('loading').innerHTML = '<p>Error loading post details. Please try again later.</p>';
+                    });
+            } else {
+                console.error('No post ID found in URL.');
+                document.getElementById('loading').innerHTML = '<p>No post ID found. Please provide a valid post ID in the URL.</p>';
+            }
+        });
+    </script>
+</body>
 </html>

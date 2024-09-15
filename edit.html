@@ -98,9 +98,7 @@
 
             fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}`, {
                 method: 'GET',
-                headers: {
-                    'Authorization': `${localStorage.getItem('token')}`
-                }
+               
             })
             .then(response => response.json())
             .then(data => {
