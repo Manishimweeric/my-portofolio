@@ -40,6 +40,12 @@
                     <i class="bi bi-list"></i><a href="allblogs.html" class="link"> All Blogs</a>
                 </div>
             </div>
+            <!-- Add the Logout link here -->
+            <div class="row justify-content-center links">
+                <div class="col mt-4">
+                    <i class="bi bi-box-arrow-right"></i><a href="#" class="link"  onclick="logout()"> Logout</a>
+                </div>
+            </div>
         </div>
         
         <div class="linkpage1">
@@ -97,7 +103,7 @@
                    row.innerHTML = `
                        <td class="td">${index + 1}</td>
                        <td class="td">${post.title}</td>
-                       <td class="td">${post.content}</td>
+                       <td class="td">${post.content.slice(0, 50)}...</td>
                        <td class="td">${post.author}</td>
                        <td><a href="${post.image}" target="_blank"><span style="font-size:16px; fon">Blog Image<span></a></td>
                        <td class="">

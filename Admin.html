@@ -10,6 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style/adminstyle.css">
+    <script src="logout.js"></script>
 </head>
 <body>
     <section class="container-admin " >
@@ -42,7 +43,12 @@
                 </div>              
 
             </div>
-
+           <!-- Add the Logout link here -->
+            <div class="row justify-content-center links">
+                <div class="col mt-4">
+                    <i class="bi bi-box-arrow-right"></i><a href="#" class="link"  onclick="logout()"> Logout</a>
+                </div>
+            </div>  
 
         </div>
         
@@ -116,7 +122,7 @@
                     row.innerHTML = `
                         <td class="td">${index + 1}</td>
                         <td class="td">${post.title}</td>
-                        <td class="td">${post.content}</td>
+                        <td class="td">${post.content.slice(0, 100)}...</td>
                         <td class="td">${post.author}</td>
                         <td class="td"><img src="${post.image}" alt="${post.title}" style="width: 100px; height: auto; border-radius:10px"></td>
                     `;
