@@ -62,17 +62,19 @@
        <hr style="margin-left: 3%;">
        <br><br><br>
        
-       <div class="row justify-content-center blogslist ">
-        <div class="col " >
-            <div class="rectangle" >
-                <p class="ml-4 py-5">600044</p>
-                
-                
-                </div>
+       <div class="row justify-content-center blogslist">
+        <div class="col">
+            <div class="rectangle" id="likesCount">
+                <!-- Number of likes will be displayed here -->
+            </div>
         </div>
-        <div class="col" >
-            <div class="rectangle ml-5"><p class="ml-4 py-5">345300</p></div>
+        <div class="col">
+            <div class="rectangle ml-5" id="commentsCount">
+                <!-- Number of comments will be displayed here -->
+            </div>
         </div>
+    </div>
+    
     </div>
 
        <br><br><br>
@@ -134,6 +136,35 @@
                 console.error('Error fetching blog posts:', error);
             });
         });
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to fetch and display data
+    async function fetchCounts() {
+        try {
+            // Fetch data from the API
+            const response = await fetch('/posts/count');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Parse the JSON data
+            const data = await response.json();
+
+            // Get the HTML elements
+            const likesElement = document.getElementById('likesCount');
+            const commentsElement = document.getElementById('commentsCount');
+
+            // Update the HTML elements with the data
+            likesElement.innerHTML = `<p class="ml-4 py-5">${data.totalLikes}</p>`;
+            commentsElement.innerHTML = `<p class="ml-4 py-5">${data.totalComments}</p>`;
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    fetchCounts();
+});
+</script>
+
 
       </script>
 </body>
