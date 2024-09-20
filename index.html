@@ -363,31 +363,30 @@
         </section>
     </footer>
     <br>
-    <!-- Comment Modal -->
-<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="commentModalLabel">Comments</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- Comments will be displayed here -->
-          <div id="commentsContainer"></div>
-  
-          <!-- Add Comment Form -->
-          <form id="addCommentForm">
-            <div class="mb-3">
-              <label for="commentContent" class="form-label">Add a comment</label>
-              <textarea class="form-control" id="commentContent" rows="2" required></textarea>
+    <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"> <!-- Added modal-dialog-centered here -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="commentModalLabel">Comments</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <button type="submit" class="btn btn-primary">Submit Comment</button>
-          </form>
+            <div class="modal-body">
+              <!-- Comments will be displayed here -->
+              <div id="commentsContainer"></div>
+      
+              <!-- Add Comment Form -->
+              <form id="addCommentForm">
+                <div class="mb-3">
+                  <label for="commentContent" class="form-label">Add a comment</label>
+                  <textarea class="form-control" id="commentContent" rows="2" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
-  </div>
-  
+    
 
 
     <script>
