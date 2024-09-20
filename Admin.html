@@ -143,8 +143,8 @@
                     const likesElement = document.getElementById('likesCount');
                     const commentsElement = document.getElementById('commentsCount');
 
-                    likesElement.innerHTML = `<p class="ml-4 py-5">${data.totalLikes}</p>`;
-                    commentsElement.innerHTML = `<p class="ml-4 py-5">${data.totalComments}</p>`;
+                    likesElement.innerHTML = `<p class="py-5" style="margin-left:25%">${data.totalLikes} Like</p>`;
+                    commentsElement.innerHTML = `<p class=" py-5" style="margin-left:20%">${data.totalComments}<span style="font-size:20px; ">   Comments</span></p>`;
                 } catch (error) {
                     console.error('Fetch error:', error);
                 }

@@ -9,7 +9,6 @@ async function Verifytoken(url, options = {}) {
                 window.location.href = '/index.html'; 
             }
             return;
-        return;
     }
     try {
         const response = await fetch(url, {
