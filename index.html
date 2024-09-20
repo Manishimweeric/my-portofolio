@@ -450,7 +450,6 @@ document.addEventListener('DOMContentLoaded', () => {
             blogsContainer.insertAdjacentHTML('beforeend', blogHTML);
         });
 
-        // Handle comment link click
         document.querySelectorAll('.comment-link').forEach(commentLink => {
             commentLink.addEventListener('click', (e) => {
                 const postId = e.target.closest('.comment-link').dataset.postId;
@@ -490,7 +489,6 @@ function likePost(postId) {
 
 
 function fetchComments(postId) {
-
     const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`;
 
         fetch(url, {

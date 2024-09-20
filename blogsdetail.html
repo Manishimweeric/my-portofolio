@@ -9,6 +9,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style/style.css">
+    <script src="call.js"></script>
+    <script src="logout.js"></script>
     <title>Eric Portfolio</title>
 </head>
 <body>
@@ -28,138 +30,90 @@
             </div>
         </nav>
     </section>
+
     <br><br><br><br>
     <section class="container col-md-10 mt-5" id="blogs-more">
         <div class="text-center mb-4">
             <h5 class="section-type">MORE <span class="text-primary">DETAIL</span></h5>
         </div>
-    
         <div id="loading" class="text-center my-5 d-none">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
         </div>
-    
+
         <div class="row justify-content-center py-5 mt-5" id="post-details" style="display: none;">
-
             <div class="col-md-3 d-flex justify-content-center mb-4 mb-md-0">
-                <img id="post-image" src="" alt="Post Image" class="img-fluid rounded shadow">
+                <img id="post-image" src=""  alt="Post Image" class="img-fluid rounded shadow">
             </div>
-
             <div class="col-md-7">
                 <div class="card border-light shadow-sm">
                     <div class="card-body">
                         <h5 id="post-title" class="card-title mb-3"></h5>
-                        <p id="post-description" class="card-text mb-3"></p>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <h6 class="text-muted">POSTED BY:</h6>
                                 <p id="post-author" class="fw-bold"></p>
                             </div>
                             <div class="col-md-6">
-                                <h6 class="text-muted">TIME TO READ:</h6>
+                                <h6 class="text-muted">PUBLISHED TIME:</h6>
                                 <p id="post-date" class="fw-bold"></p>
                             </div>
-                        </div>
-                    </div>
+                        </div>                       
+                    </div>   
+                    <div class="card-body">
+                        <p id="post-descriptions" class="card-text mb-3"></p>                                  
+                    </div>           
                 </div>
+                <p class="col py-1">
+                    <a href="#" onclick="likePosts()">
+                        <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">                   
+                        <span id="like-count" class="likenumber"></span>
+                    </a>
+                </p>
+                
+            
             </div>
         </div>
-        <div class="row justify-content-center">
+
+        <!-- Comment Section -->
+        <div class="row justify-content-center mt-5">
             <div class="col-md-10">
-                <div class="card border-light shadow-sm">
-                    <div class="card-body">
-                        <p id="post-content" class="card-text" style="font-size: 17px;"></p>
-                    </div>
-                </div>
+                <h5 class="mb-4">Comments</h5>
+                <div id="commentsContainer"></div>
+                <form id="addCommentForm" class="mt-4">
+                    <textarea id="commentContent" class="form-control" rows="3" placeholder="Add a comment..."></textarea>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
             </div>
         </div>
     </section>
-    
+
     <footer class="footer">
-        <div class="row justify-content-center" style="margin-left: 8%;">
-            <div class="col ml-5 ">
-                <div class="card-body">
-                    <p class="card-texts" style="font-size: 18px; color: rgb(255, 255, 255);">
-                        &nbsp;&nbsp;&nbsp;&nbsp; Contact Us
-                    </p>
-                    <p class="card-text" style="font-size: 15px; color: rgb(255, 255, 255);">
-                        <img src="Images/contactas (1).png" alt="Eric's Portfolio Image" class="footer-image">
-                        +250789704679
-                    </p>
-                    <p class="card-texts" style="font-size: 15px; color: rgb(255, 255, 255);">
-                        <img src="Images/EMAIL-removebg-preview.png" alt="Eric's Portfolio Image" class="footer-image">
-                        manishimweeric54@gmail.com
-                    </p>
-                    <p class="card-texts" style="font-size: 15px; color: rgb(255, 255, 255);">
-                        <img src="Images/git-removebg-preview.png" alt="Eric's Portfolio Image" class="footer-image">
-                        Ericmanishimwe
-                    </p>
-                </div>
-            </div>
-            <div class="col ml-5 ">
-                <div class="card-body">
-                    <p class="card-texts" style="font-size: 18px; color: rgb(255, 255, 255);">
-                        &nbsp;&nbsp;&nbsp;&nbsp; Location
-                    </p>
-                    <p class="card-texts">
-                        <img src="Images/contactas (5).png" alt="Eric's Portfolio Image" class="footer-image"> KN 5 Rd,
-                        Kigali, Kigali City, RW
-                    </p>
-                    <p class="card-texts">
-                        <img src="Images/contactas (5).png" alt="Eric's Portfolio Image" class="footer-image">
-                        Rwandan-Kigali-Gasabo
-                    </p>
-                </div>
-            </div>
-            <div class="col ml-5 ">
-                <div class="card-body mt-3">
-                    <input type="text" class="form-controls " placeholder="Contact us">
-                    <p>
-                        <input type="text" class="form-controls mt-4" placeholder="Join us">
-                    <p>
-                </div>
-            </div>
-            <div class="col ml-5 col-data  mt-5 py-2">
-                <p class="card-texts ml-5">
-                    <a href="" class="link"> <img src="Images/contactas (2).png" alt="Eric's Portfolio Image"
-                            class="footer-images"></a>
-                    <a href="" class="link"> <img src="Images/contactas (3).png" alt="Eric's Portfolio Image"
-                            class="footer-images"></a>
-                    <a href="" class="link"> <img src="Images/contactas (4).png" alt="Eric's Portfolio Image"
-                            class="footer-images"></a>
-                    <a href="" class="link"> <img src="Images/instagrams-removebg-preview.png"
-                            alt="Eric's Portfolio Image" class="footer-images"></a>
-                    <a href="" class="link"> <img src="Images/contactas (1).png" alt="Eric's Portfolio Image"
-                            class="footer-images"></a>
-                </p>
-            </div>
-            <br>
-        </div>
-        </section>
-        <section class="container text-center copylihty">
-            &copy; 2023 ERIC MANISHIMWE &nbsp;&nbsp; LEGACY  POLICY
+        <!-- Footer content -->
+    </footer>
 
-<br>
     <script>
+        // Load the post data when the page is ready
         document.addEventListener("DOMContentLoaded", function () {
-
             const urlParams = new URLSearchParams(window.location.search);
             const postId = urlParams.get('id');
 
             if (postId) {
+                document.getElementById('loading').style.display = 'block';
                 fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}`)
                     .then(response => response.json())
                     .then(post => {
                         document.getElementById('loading').style.display = 'none';
-
                         document.getElementById('post-title').textContent = post.title;
-                        document.getElementById('post-description').textContent = post.description;
+                        
+                        document.getElementById('post-descriptions').textContent = post.content;
                         document.getElementById('post-author').textContent = post.author;
-                        document.getElementById('post-content').textContent = post.content;
                         document.getElementById('post-image').src = post.image;
-                        document.getElementById('post-date').textContent= post.date;
+                        document.getElementById('post-date').textContent = post.date;
+                        document.getElementById('like-count').textContent =post.likesCount;                        
                         document.getElementById('post-details').style.display = 'flex';
+                        fetchComments(post._id);
                     })
                     .catch(error => {
                         console.error('Error fetching post data:', error);
@@ -170,6 +124,100 @@
                 document.getElementById('loading').innerHTML = '<p>No post ID found. Please provide a valid post ID in the URL.</p>';
             }
         });
+
+        function fetchComments(postId) {
+            const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`;
+
+            fetch(url, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(comments => {
+                const commentsContainer = document.getElementById('commentsContainer');
+                commentsContainer.innerHTML = '';
+
+                comments.forEach(comment => {
+                    const commentHTML = `
+                        <div class="comment py-2">
+                            <div class="d-flex align-items-start">
+                                <img src="Images/usereico.png" alt="User Avatar" class="rounded-circle me-3" style="width: 40px; height: 40px;">
+                                <div class="comment-body">
+                                    <h6 class="fw-bold mb-1">${comment.user.email}</h6>
+                                    <p class="mb-0 text-muted">${comment.content}</p>
+                                    <small class="text-muted">${new Date(comment.date).toLocaleString()}</small>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
+                });
+
+                document.getElementById('addCommentForm').dataset.postId = postId;
+            })
+            .catch(error => console.error('Error fetching comments:', error));
+        }
+
+        function likePosts() {
+            const postId = urlParams.get('id');
+            const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
+
+            Verifytoken(url, {
+                method: 'POST',
+            })
+            .then(async (response) => {
+         if (response.ok) {
+            const result = await response.json();
+            const likeCountElement = document.getElementById(`like-count-${postId}`);
+            const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
+            if (result.message === 'Like added') {
+                likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+                likeButton.classList.add('liked');
+            } else if (result.message === 'Like removed') {
+                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
+                likeButton.classList.remove('liked');
+            }
+        } else {
+            const errorText = await response.text();
+            console.error('Failed to like blog:', errorText);
+        }
+    })
+        }
+
+    document.getElementById('addCommentForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const postId = e.target.dataset.postId;
+    const commentContent = document.getElementById('commentContent').value;
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        alert('Your token has expired. Would you like to log in again?');
+        document.getElementById('commentContent').value = '';
+        return;
+    }
+
+    fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` 
+        },
+        body: JSON.stringify({ content: commentContent })
+    })
+    .then(response => response.json())
+    .then(newComment => {
+
+        const commentsContainer = document.getElementById('commentsContainer');
+        const newCommentHTML = `
+            <div class="comment">
+                <p><strong>${token.email}</strong>: ${newComment.content}</p>
+            </div>
+        `;
+        commentsContainer.insertAdjacentHTML('beforeend', newCommentHTML);
+        document.getElementById('commentContent').value = '';
+    })
+    .catch(error => console.error('Error submitting comment:', error));
+});
+
     </script>
 </body>
 </html>
