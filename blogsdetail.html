@@ -65,17 +65,22 @@
                         <p id="post-descriptions" class="card-text mb-3"></p>                                  
                     </div>           
                 </div>
-                <p class="col py-1">
-                    <a href="#" onclick="likePosts()">
+                <!-- <p class="col py-1">
+                    <a href="" onclick="likePosts()">
                         <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">                   
                         <span id="like-count" class="likenumber"></span>
+                    </a>
+                </p> -->
+                <p class="col py-1">
+                    <a href="#" id="like-button" class="like-btn">
+                        <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">                   
+                        <span id="like-count" class="likenumber">0</span>
                     </a>
                 </p>
                 
             
             </div>
         </div>
-
         <!-- Comment Section -->
         <div class="row justify-content-center mt-5">
             <div class="col-md-10">
@@ -157,31 +162,73 @@
             .catch(error => console.error('Error fetching comments:', error));
         }
 
-        function likePosts() {
-            const postId = urlParams.get('id');
-            const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
+    //     function likePosts() {
+    //         const postId = urlParams.get('id');
+    //         const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
 
-            Verifytoken(url, {
+    //         Verifytoken(url, {
+    //             method: 'POST',
+    //         })
+    //         .then(async (response) => {
+    //      if (response.ok) {
+    //         const result = await response.json();
+    //         const likeCountElement = document.getElementById(`like-count-${postId}`);
+    //         const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
+    //         if (result.message === 'Like added') {
+    //             likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+    //             likeButton.classList.add('liked');
+    //         } else if (result.message === 'Like removed') {
+    //             likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
+    //             likeButton.classList.remove('liked');
+    //         }
+    //     } else {
+    //         const errorText = await response.text();
+    //         console.error('Failed to like blog:', errorText);
+    //     }
+    // })
+    //     }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    document.getElementById('like-button').addEventListener('click', (event) => {
+        event.preventDefault();
+        likePosts(postId);
+    });
+
+    async function likePosts(postId) {
+        const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
+
+        try {
+            const response = await fetch(url, {
                 method: 'POST',
-            })
-            .then(async (response) => {
-         if (response.ok) {
-            const result = await response.json();
-            const likeCountElement = document.getElementById(`like-count-${postId}`);
-            const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
-            if (result.message === 'Like added') {
-                likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-                likeButton.classList.add('liked');
-            } else if (result.message === 'Like removed') {
-                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
-                likeButton.classList.remove('liked');
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                const likeCountElement = document.getElementById('like-count');
+                const likeButton = document.querySelector(`#like-button img`);
+
+                // Update like count and toggle the like state
+                if (result.message === 'Like added') {
+                    likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+                    likeButton.classList.add('liked');
+                } else if (result.message === 'Like removed') {
+                    likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
+                    likeButton.classList.remove('liked');
+                }
+            } else {
+                console.error('Failed to like blog:', await response.text());
             }
-        } else {
-            const errorText = await response.text();
-            console.error('Failed to like blog:', errorText);
+        } catch (error) {
+            console.error('Error liking the post:', error);
         }
-    })
-        }
+    }
+
 
     document.getElementById('addCommentForm').addEventListener('submit', (e) => {
     e.preventDefault();
