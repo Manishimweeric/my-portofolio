@@ -545,6 +545,8 @@ document.getElementById('addCommentForm').addEventListener('submit', (e) => {
         },
         body: JSON.stringify({ content: commentContent })
     })
+
+    
     .then(response => response.json())
     .then(newComment => {
 
