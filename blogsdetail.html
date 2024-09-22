@@ -174,12 +174,14 @@
             rwkislfh
             if (result.message === 'Like added') {
                 likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-                likeButton.classList.add('liked');
                 alert("Like added successfully")
+                likeButton.classList.add('liked');
+                
             } else if (result.message === 'Like removed') {
-                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);                
+                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);  
+                alert("Like removed successfully")              
                 likeButton.classList.remove('liked');
-                alert("Like removed successfully")
+                
             }
             document.getElementById('like-count').textContent =likeCountElement; 
         } else {
@@ -188,42 +190,6 @@
         }
         })
         }
-
-        // const link = document.getElementById("myLink");
-
-        // link.addEventListener("click", function(event) {
-        //     event.preventDefault();
-        //     myFunction();          
-        // });
-
-        // function myFunction() {
-           
-        //     const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
-        
-        //     Verifytoken(url, {
-        //         method: 'POST',
-        //     })
-        //     .then(async (response) => {
-        //         alert("Hello manishimwe");
-        //   if (response.ok) {
-        //     const result = await response.json();
-            
-        //     const likeCountElement = document.getElementById(`like-count-${postId}`);
-        //     const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
-        //     rwkislfh
-        //     if (result.message === 'Like added') {
-        //         likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-        //         likeButton.classList.add('liked');
-        //     } else if (result.message === 'Like removed') {
-        //         likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
-        //         likeButton.classList.remove('liked');
-        //     }
-        // } else {
-        //     const errorText = await response.text();
-        //     console.error('Failed to like blog:', errorText);
-        // }
-        // })
-        // }
         
     ////////////////////////////////////To comment to a blogs ////////////////////////////////////
 
