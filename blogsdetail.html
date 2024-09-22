@@ -65,17 +65,13 @@
                         <p id="post-descriptions" class="card-text mb-3"></p>                                  
                     </div>           
                 </div>
-                <!-- <p class="col py-1">
-                    <a href="" onclick="likePosts()">
-                        <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">                   
-                        <span id="like-count" class="likenumber"></span>
-                    </a>
-                </p> -->
                 <p class="col py-1">
-                    <a href="#" id="like-button" class="like-btn">
+                    <a href="#" id="myLink"  onclick="event.preventDefault(); likePost()" >
                         <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">                   
                         <span id="like-count" class="likenumber">0</span>
                     </a>
+
+                    <p id="post-id" class="card-text mb-3"></p> 
                 </p>
                 
             
@@ -99,7 +95,6 @@
     </footer>
 
     <script>
-        // Load the post data when the page is ready
         document.addEventListener("DOMContentLoaded", function () {
             const urlParams = new URLSearchParams(window.location.search);
             const postId = urlParams.get('id');
@@ -116,7 +111,8 @@
                         document.getElementById('post-author').textContent = post.author;
                         document.getElementById('post-image').src = post.image;
                         document.getElementById('post-date').textContent = post.date;
-                        document.getElementById('like-count').textContent =post.likesCount;                        
+                        document.getElementById('like-count').textContent =post.likesCount; 
+                        document.getElementById('post-id').textContent = post._id;                       
                         document.getElementById('post-details').style.display = 'flex';
                         fetchComments(post._id);
                     })
@@ -162,73 +158,73 @@
             .catch(error => console.error('Error fetching comments:', error));
         }
 
-    //     function likePosts() {
-    //         const postId = urlParams.get('id');
-    //         const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
+        ////////////////////////Like a post//////////////////////////////////////////////
+        // function likePost() {
+        //   const  p_id = document.getElementById('post_id').value;
+        //     const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${p_id}/like`;
 
-    //         Verifytoken(url, {
-    //             method: 'POST',
-    //         })
-    //         .then(async (response) => {
-    //      if (response.ok) {
-    //         const result = await response.json();
-    //         const likeCountElement = document.getElementById(`like-count-${postId}`);
-    //         const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
-    //         if (result.message === 'Like added') {
-    //             likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-    //             likeButton.classList.add('liked');
-    //         } else if (result.message === 'Like removed') {
-    //             likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
-    //             likeButton.classList.remove('liked');
-    //         }
-    //     } else {
-    //         const errorText = await response.text();
-    //         console.error('Failed to like blog:', errorText);
-    //     }
-    // })
-    //     }
+        //     alert("Hello manishimwe");
+        //     Verifytoken(url, {
+        //         method: 'POST',
+        //     })
+        //     .then(async (response) => {
+        //   if (response.ok) {
+        //     const result = await response.json();
+            
+        //     const likeCountElement = document.getElementById(`like-count-${postId}`);
+        //     const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
+        //     rwkislfh
+        //     if (result.message === 'Like added') {
+        //         likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+        //         likeButton.classList.add('liked');
+        //     } else if (result.message === 'Like removed') {
+        //         likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
+        //         likeButton.classList.remove('liked');
+        //     }
+        // } else {
+        //     const errorText = await response.text();
+        //     console.error('Failed to like blog:', errorText);
+        // }
+        // })
+        // }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
+        const link = document.getElementById("myLink");
 
-    document.getElementById('like-button').addEventListener('click', (event) => {
-        event.preventDefault();
-        likePosts(postId);
-    });
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            myFunction();          
+        });
 
-    async function likePosts(postId) {
-        const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
-
-        try {
-            const response = await fetch(url, {
+        function myFunction() {
+           
+            const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
+        
+            Verifytoken(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `${token}`
-                }
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                const likeCountElement = document.getElementById('like-count');
-                const likeButton = document.querySelector(`#like-button img`);
-
-                // Update like count and toggle the like state
-                if (result.message === 'Like added') {
-                    likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-                    likeButton.classList.add('liked');
-                } else if (result.message === 'Like removed') {
-                    likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
-                    likeButton.classList.remove('liked');
-                }
-            } else {
-                console.error('Failed to like blog:', await response.text());
+            })
+            .then(async (response) => {
+                alert("Hello manishimwe");
+          if (response.ok) {
+            const result = await response.json();
+            
+            const likeCountElement = document.getElementById(`like-count-${postId}`);
+            const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
+            rwkislfh
+            if (result.message === 'Like added') {
+                likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+                likeButton.classList.add('liked');
+            } else if (result.message === 'Like removed') {
+                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);
+                likeButton.classList.remove('liked');
             }
-        } catch (error) {
-            console.error('Error liking the post:', error);
+        } else {
+            const errorText = await response.text();
+            console.error('Failed to like blog:', errorText);
         }
-    }
-
+        })
+        }
+        
+    ////////////////////////////////////To comment to a blogs ////////////////////////////////////
 
     document.getElementById('addCommentForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -265,6 +261,6 @@
     .catch(error => console.error('Error submitting comment:', error));
 });
 
-    </script>
+</script>
 </body>
 </html>

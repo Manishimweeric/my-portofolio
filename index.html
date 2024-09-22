@@ -430,16 +430,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             <h5 class="card-title col-md-5">${post.title}</h5>
                             <p class="card-text col-md-11">${post.content.slice(0, 100)}...</p>
                             <p class="col">
-                                <a href="#" onclick="likePost('${post._id}')">
                                     <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">
-                                </a>
                                 <span id="like-count-${post._id}" class="likenumber">${post.likesCount || 0}</span>
-
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="#" class="comment-link" data-post-id="${post._id}" data-bs-toggle="modal" data-bs-target="#commentModal">
-                                    <img src="Images/comment-removebg-preview.png" class="images comment-image" alt="Comment">
-                                </a>
-                                <span class="likenumber"></span>
+                                    <img src="Images/comment-removebg-preview.png" class="images comment-image" alt="Comment">                
+                                <span class="commentcount">${post.commentsCount || 0}</span>
                             </p>
                             &nbsp;&nbsp;
                             <a href="blogsdetail.html?id=${post._id}" class="btn btn-primary">Read More <i class="bi bi-arrow-right"></i></a>
