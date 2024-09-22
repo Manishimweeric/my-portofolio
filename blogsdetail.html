@@ -68,7 +68,7 @@
                 <p class="col py-1">
                     <a href="#" onclick="likePost()" >
                         <img src="Images/likephot-removebg-preview.png" class="images like-image" alt="Like">                   
-                        <span id="like-count" class="likenumber">0</span>
+                        <span id="like-count-{{postId}}" class="likenumber">0</span>
                     </a>
 
                     <p id="post-id" class="card-text mb-3"></p> 
@@ -97,8 +97,7 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('id');
-        document.addEventListener("DOMContentLoaded", function () {
-            
+        document.addEventListener("DOMContentLoaded", function () {            
 
             if (postId) {
                 document.getElementById('loading').style.display = 'block';
@@ -161,6 +160,8 @@
 
         ////////////////////////Like a post//////////////////////////////////////////////
         function likePost() {
+            const message=""
+            const likeCountElement="";
             const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
             Verifytoken(url, {
                 method: 'POST',
@@ -168,27 +169,32 @@
             .then(async (response) => {
           if (response.ok) {
             const result = await response.json();
+
             
-            const likeCountElement = document.getElementById(`like-count-${postId}`);
+            
+             likeCountElement = document.getElementById(`like-count-${postId}`);
             const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
-            rwkislfh
             if (result.message === 'Like added') {
                 likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-                alert("Like added successfully")
                 likeButton.classList.add('liked');
+                message="Like added successfully"
                 
             } else if (result.message === 'Like removed') {
-                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);  
-                alert("Like removed successfully")              
-                likeButton.classList.remove('liked');
-                
-            }
-            document.getElementById('like-count').textContent =likeCountElement; 
+                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);               
+                likeButton.classList.remove('liked'); 
+                message="Like removed successfully"
+
+            }       
+
+           
+
         } else {
             const errorText = await response.text();
             console.error('Failed to like blog:', errorText);
         }
+        
         })
+        
         }
         
     ////////////////////////////////////To comment to a blogs ////////////////////////////////////
