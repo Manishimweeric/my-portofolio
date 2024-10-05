@@ -2,14 +2,23 @@ async function Verifytoken(url, options = {}) {
     const token = localStorage.getItem('token');
 
     if (!token) {        
-        const userChoice = confirm('Your token has expired. Would you like to log in again?');            
-            if (userChoice) {
+        Swal.fire({
+            title: 'Session Expired',
+            text: 'Your token has expired. Would you like to log in again?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Log in',
+            cancelButtonText: 'Go to Home'
+        }).then((result) => {
+            if (result.isConfirmed) {
                 window.location.href = '/login.html'; 
             } else {
                 window.location.href = '/index.html'; 
             }
-            return;
+        });
+        return; // Exit the function if the token is expired
     }
+
     try {
         const response = await fetch(url, {
             ...options,
@@ -20,15 +29,28 @@ async function Verifytoken(url, options = {}) {
             }
         });
 
-        if (response.status === 401) {          
-            localStorage.removeItem('authToken');
-            window.location.href = '/login.html'; 
-            return;
+        if (response.status === 401) {
+            localStorage.removeItem('token'); // Remove invalid token
+            Swal.fire({
+                title: 'Unauthorized',
+                text: 'Your session has expired. Please log in again.',
+                icon: 'warning',
+                confirmButtonText: 'Log in'
+            }).then(() => {
+                window.location.href = '/login.html'; 
+            });
+            return; // Stop execution if unauthorized
         }
 
         return response;
     } catch (error) {
         console.error('Error making request:', error);
-        throw error;
-  }
- }
+        Swal.fire({
+            title: 'Error',
+            text: 'An error occurred while processing your request. Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'Okay'
+        });
+        throw error; // Rethrow the error for handling elsewhere if needed
+    }
+}
