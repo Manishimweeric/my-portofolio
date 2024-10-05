@@ -132,16 +132,14 @@
     
     </div>
     </section>    
-   
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const postId = urlParams.get('id');
             document.getElementById('postId').value = postId;
-
+    
             fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}`, {
                 method: 'GET',
-               
             })
             .then(response => response.json())
             .then(data => {
@@ -149,18 +147,32 @@
                 document.getElementById('author').value = data.author;
                 document.getElementById('content').value = data.content;
             })
-            .catch(error => console.error('Error fetching blog details:', error));
-
-        document.getElementById('blogForm').addEventListener('submit', (event) => {
+            .catch(error => {
+                console.error('Error fetching blog details:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to fetch blog details. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                });
+            });
+    
+            document.getElementById('blogForm').addEventListener('submit', (event) => {
                 event.preventDefault();
                 
                 const postId = document.getElementById('postId').value;
                 const token = localStorage.getItem('token');
                 
                 if (!token) {
-                    console.error('Token is missing');
+                    Swal.fire({
+                        title: 'Authentication Error',
+                        text: 'Token is missing. Please log in again.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
                     return;
                 }
+    
                 const updatedData = {
                     title: document.getElementById('title').value,
                     author: document.getElementById('author').value,
@@ -182,16 +194,28 @@
                     throw new Error('Error updating blog');
                 })
                 .then(data => {
-                    alert('Blog updated successfully!');
-                    window.location.href = 'allblogs.html';
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Blog updated successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'Okay'
+                    }).then(() => {
+                        window.location.href = 'allblogs.html';
+                    });
                 })
                 .catch(error => {
                     console.error('Error updating blog:', error);
-                    alert('Failed to update the blog post.');
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to update the blog post. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
                 });
             });
         });
     </script>
+    
     
     
     
