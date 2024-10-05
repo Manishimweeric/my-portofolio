@@ -93,12 +93,11 @@
     <footer class="footer">
         <!-- Footer content -->
     </footer>
-
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('id');
         document.addEventListener("DOMContentLoaded", function () {            
-
+    
             if (postId) {
                 document.getElementById('loading').style.display = 'block';
                 fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}`)
@@ -117,17 +116,27 @@
                     })
                     .catch(error => {
                         console.error('Error fetching post data:', error);
-                        document.getElementById('loading').innerHTML = '<p>Error loading post details. Please try again later.</p>';
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Error loading post details. Please try again later.',
+                            icon: 'error',
+                            confirmButtonText: 'Okay'
+                        });
                     });
             } else {
                 console.error('No post ID found in URL.');
-                document.getElementById('loading').innerHTML = '<p>No post ID found. Please provide a valid post ID in the URL.</p>';
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No post ID found. Please provide a valid post ID in the URL.',
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                });
             }
         });
-
+    
         function fetchComments(postId) {
             const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`;
-
+    
             fetch(url, {
                 method: 'GET',
             })
@@ -135,7 +144,7 @@
             .then(comments => {
                 const commentsContainer = document.getElementById('commentsContainer');
                 commentsContainer.innerHTML = '';
-
+    
                 comments.forEach(comment => {
                     const commentHTML = `
                         <div class="comment py-2">
@@ -151,85 +160,114 @@
                     `;
                     commentsContainer.insertAdjacentHTML('beforeend', commentHTML);
                 });
-
+    
                 document.getElementById('addCommentForm').dataset.postId = postId;
             })
             .catch(error => console.error('Error fetching comments:', error));
         }
-
+    
         ////////////////////////Like a post//////////////////////////////////////////////
         function likePost() {
             const message=""
-
+    
             const url = `https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/like`;
             Verifytoken(url, {
                 method: 'POST',
             })
             .then(async (response) => {
-          if (response.ok) {
-            const result = await response.json();
-            
-            const likeCountElement = document.getElementById('like-count');
-            const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
-            if (result.message === 'Like added') {
-                likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
-                likeButton.classList.add('liked');
-                message="Like added successfully"
-                
-            } else if (result.message === 'Like removed') {
-                likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);               
-                likeButton.classList.remove('liked'); 
-                message="Like removed successfully"
-
-            }       
-
-
-        } else {
-            const errorText = await response.text();
-            console.error('Failed to like blog:', errorText);
+                if (response.ok) {
+                    const result = await response.json();
+                    const likeCountElement = document.getElementById('like-count');
+                    const likeButton = document.querySelector(`a[onclick="likePost('${postId}')"] img`);
+                    
+                    if (result.message === 'Like added') {
+                        likeCountElement.textContent = parseInt(likeCountElement.textContent) + 1;
+                        likeButton.classList.add('liked');
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Like added successfully',
+                            icon: 'success',
+                            confirmButtonText: 'Okay'
+                        });
+                        
+                    } else if (result.message === 'Like removed') {
+                        likeCountElement.textContent = Math.max(0, parseInt(likeCountElement.textContent) - 1);               
+                        likeButton.classList.remove('liked'); 
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Like removed successfully',
+                            icon: 'success',
+                            confirmButtonText: 'Okay'
+                        });
+                    }       
+                } else {
+                    const errorText = await response.text();
+                    console.error('Failed to like blog:', errorText);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to like the post. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
+                }
+            });
         }
         
-        })
-        
-        }
-        
-    ////////////////////////////////////To comment to a blogs ////////////////////////////////////
-
-    document.getElementById('addCommentForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const postId = e.target.dataset.postId;
-    const commentContent = document.getElementById('commentContent').value;
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        alert('Your token has expired. Would you like to log in again?');
-        document.getElementById('commentContent').value = '';
-        return;
-    }
-
-    fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${token}` 
-        },
-        body: JSON.stringify({ content: commentContent })
-    })
-    .then(response => response.json())
-    .then(newComment => {
-
-        const commentsContainer = document.getElementById('commentsContainer');
-        const newCommentHTML = `
-            <div class="comment">
-                <p><strong>${token.email}</strong>: ${newComment.content}</p>
-            </div>
-        `;
-        commentsContainer.insertAdjacentHTML('beforeend', newCommentHTML);
-        document.getElementById('commentContent').value = '';
-    })
-    .catch(error => console.error('Error submitting comment:', error));
-});
-
-</script>
+        ////////////////////////////////////To comment on a blog ////////////////////////////////////
+        document.getElementById('addCommentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const postId = e.target.dataset.postId;
+            const commentContent = document.getElementById('commentContent').value;
+            const token = localStorage.getItem('token');
+    
+            if (!token) {
+                Swal.fire({
+                    title: 'Session Expired',
+                    text: 'Your token has expired. Please log in again.',
+                    icon: 'warning',
+                    confirmButtonText: 'Okay'
+                });
+                document.getElementById('commentContent').value = '';
+                return;
+            }
+    
+            fetch(`https://blogs-backends-x8t0.onrender.com/api/blogs/${postId}/comments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}` 
+                },
+                body: JSON.stringify({ content: commentContent })
+            })
+            .then(response => response.json())
+            .then(newComment => {
+                const commentsContainer = document.getElementById('commentsContainer');
+                const newCommentHTML = `
+                    <div class="comment">
+                        <p><strong>${token.email}</strong>: ${newComment.content}</p>
+                    </div>
+                `;
+                commentsContainer.insertAdjacentHTML('beforeend', newCommentHTML);
+                document.getElementById('commentContent').value = '';
+                Swal.fire({
+                    title: 'Comment Added',
+                    text: 'Your comment was successfully added.',
+                    icon: 'success',
+                    confirmButtonText: 'Okay'
+                });
+            })
+            .catch(error => {
+                console.error('Error submitting comment:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'There was an error submitting your comment. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'Okay'
+                });
+            });
+        });
+    
+    </script>
+    
 </body>
 </html>
